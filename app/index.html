@@ -1,59 +1,281 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cloud Run Revision v2 AGAIN AGAIN</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            text-align: center;
-            padding-top: 80px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevOps CI/CD Project</title>
 
-        h1 {
-            color: #1a73e8;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        button {
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #ffffff;
+      line-height: 1.6;
+    }
 
-        #result {
-            margin-top: 25px;
-            font-size: 18px;
-            color: red;
-        }
-    </style>
+    header {
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h2 {
+      color: #38bdf8;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 50px 8%;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #22c55e;
+    }
+
+    .hero p {
+      font-size: 20px;
+      max-width: 850px;
+      margin: auto;
+      color: #cbd5e1;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      background: #22c55e;
+      color: #0f172a;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #16a34a;
+    }
+
+    section {
+      padding: 70px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: #38bdf8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      background: rgba(56, 189, 248, 0.15);
+    }
+
+    .card h3 {
+      color: #22c55e;
+      margin-bottom: 10px;
+    }
+
+    .pipeline {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .pipeline-step {
+      margin: 15px 0;
+      padding: 15px;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 8px;
+      border-left: 5px solid #22c55e;
+    }
+
+    .status-box {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #020617;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+      }
+
+      nav {
+        margin-top: 15px;
+      }
+
+      nav a {
+        margin: 0 8px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <h1>Cloud Run Revision v2</h1>
-    <h2>Testing Revision and Timeout Error</h2>
+  <header>
+    <h2>DevOps Project</h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#status">Status</a>
+    </nav>
+  </header>
 
-    <p>This page is updated to create a new Cloud Run revision.</p>
+  <section class="hero" id="home">
+    <div>
+      <h1>GCP DevOps CI/CD <span>Deployment</span></h1>
+      <p>
+        This project demonstrates a complete DevOps workflow using Docker,
+        GitHub Actions, Artifact Registry, Workload Identity Federation,
+        and Google Cloud Run.
+      </p>
+      <button class="btn" onclick="showMessage()">Check Deployment</button>
+      <div id="message" class="status-box" style="display:none;">
+        ✅ Website is successfully deployed on Google Cloud Run
+      </div>
+    </div>
+  </section>
 
-    <button onclick="testTimeout()">Test Timeout Error</button>
+  <section id="tools">
+    <h2 class="section-title">Tools Used</h2>
 
-    <div id="result"></div>
+    <div class="cards">
+      <div class="card">
+        <h3>HTML & CSS</h3>
+        <p>Frontend website created using static HTML and CSS.</p>
+      </div>
 
-    <script>
-        async function testTimeout() {
-            document.getElementById("result").innerHTML =
-                "Request started... waiting for slow response...";
+      <div class="card">
+        <h3>Docker</h3>
+        <p>Website is containerized using Nginx Docker image.</p>
+      </div>
 
-            try {
-                const response = await fetch("/slow");
-                const data = await response.text();
+      <div class="card">
+        <h3>GitHub Actions</h3>
+        <p>CI/CD pipeline automatically builds and deploys the app.</p>
+      </div>
 
-                document.getElementById("result").innerHTML = data;
-            } catch (error) {
-                document.getElementById("result").innerHTML =
-                    "Timeout Error / Request Failed";
-            }
-        }
-    </script>
+      <div class="card">
+        <h3>Artifact Registry</h3>
+        <p>Docker images are stored securely in Google Artifact Registry.</p>
+      </div>
+
+      <div class="card">
+        <h3>Cloud Run</h3>
+        <p>Container is deployed as a serverless service on GCP.</p>
+      </div>
+
+      <div class="card">
+        <h3>IAM & WIF</h3>
+        <p>GitHub authenticates securely using Workload Identity Federation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pipeline">
+    <h2 class="section-title">CI/CD Pipeline Flow</h2>
+
+    <div class="pipeline">
+      <div class="pipeline-step">1. Developer pushes code to dev branch</div>
+      <div class="pipeline-step">2. GitHub Actions workflow starts automatically</div>
+      <div class="pipeline-step">3. Docker image is built from app folder</div>
+      <div class="pipeline-step">4. Docker image is pushed to Artifact Registry</div>
+      <div class="pipeline-step">5. Cloud Run deploys the latest image</div>
+      <div class="pipeline-step">6. Website becomes live publicly</div>
+    </div>
+  </section>
+
+  <section id="status">
+    <h2 class="section-title">Deployment Status</h2>
+
+    <div class="pipeline">
+      <h3>Environment: DEV</h3>
+      <p>Branch: dev</p>
+      <p>Cloud Run Service: demo-app-dev</p>
+      <p>Region: us-central1</p>
+
+      <div class="status-box">
+        ✅ CI/CD Pipeline Completed Successfully
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Created by Divay Pratap Singh Chauhan | DevOps CI/CD Demo</p>
+  </footer>
+
+  <script>
+    function showMessage() {
+      const message = document.getElementById("message");
+      message.style.display = "block";
+    }
+  </script>
 
 </body>
 </html>
