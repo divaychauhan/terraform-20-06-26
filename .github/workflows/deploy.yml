@@ -1,9 +1,10 @@
-name: Deploy to Cloud Run
+cat > .github/workflows/deploy.yml <<'EOF'
+name: Deploy Dev to Cloud Run
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 permissions:
   contents: read
@@ -12,6 +13,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
       - name: Checkout
@@ -26,23 +28,26 @@ jobs:
       - name: Setup GCloud
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker for Artifact Registry
+      - name: Configure Docker
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-      - name: Build Docker Image
+      - name: Build Image
         run: |
-          docker build -t us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app:${{ github.sha }} ./app
+          docker build \
+            -t us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app-dev:${{ github.sha }} \
+            ./app
 
-      - name: Push Docker Image
+      - name: Push Image
         run: |
-          docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app:${{ github.sha }}
+          docker push \
+            us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app-dev:${{ github.sha }}
 
-      - name: Deploy Cloud Run
+      - name: Deploy Cloud Run Dev
         run: |
-          gcloud run deploy demo-app \
-            --image us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app:${{ github.sha }} \
+          gcloud run deploy demo-app-dev \
+            --image us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/app-repo/demo-app-dev:${{ github.sha }} \
             --region us-central1 \
             --platform managed \
-            --port 8080 \
             --allow-unauthenticated
+EOF
